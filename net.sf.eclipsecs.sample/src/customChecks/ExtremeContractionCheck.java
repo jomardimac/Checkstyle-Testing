@@ -28,10 +28,17 @@ public class ExtremeContractionCheck extends AbstractCheck {
 	public void visitToken(DetailAST ast) {
 		DetailAST child = (DetailAST) ast.getFirstChild();
 		
+		//Traversing the AST
 		while(child != null) {
-			if (child.getText().length() < lowestAcceptableCount) {
-				log(ast.getLineNo(), "extremecontraction", 1);
+			//Debugging output
+			System.out.println("text: " + child.getText() + "|" + child.getType());
+			//Checking to see if the length of the token is less than the tolerable amount
+			if (child.getText().length() < lowestAcceptableCount && child.getType() == 58) {
+				//Loggin error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
+				log(ast.getLineNo(), "extremecontraction", lowestAcceptableCount);
+				System.out.println("errors yooooo");
 			}
+			//Progressing in the tree.
 			child = (DetailAST) child.getNextSibling();
 		}
 	}
