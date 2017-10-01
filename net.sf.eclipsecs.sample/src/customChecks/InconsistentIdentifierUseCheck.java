@@ -16,6 +16,34 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return new int[] { TokenTypes.VARIABLE_DEF};
 	}
 	
+	public boolean isAllLower(String var) {
+		for (int i = 0; i < var.length(); i++) {
+			if (var.charAt(i) >= 65 && var.charAt(i) <= 90) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isCamelCase(String var) {
+		return false;
+	}
+	
+	public boolean isSnakeCase(String var) {
+		return false;
+	}
+	
+	public boolean hasPrecedingF(String var) {
+		if (var.charAt(0) == 'f' && (var.charAt(1) >= 65 && var.charAt(1) <= 90)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isAllCaps(String var) {
+		return false;
+	}
+	
 	//Method for behavior of check.
 	@Override
 	public void visitToken(DetailAST ast) {
