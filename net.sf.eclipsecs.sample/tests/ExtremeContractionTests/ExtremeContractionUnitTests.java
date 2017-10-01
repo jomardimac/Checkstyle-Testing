@@ -54,7 +54,7 @@ public class ExtremeContractionUnitTests {
 		String filename = "TestClassWithErrors.java";
 		//URL fileURL = getClass().getResource(filename);
 		//File testFile = new File(fileURL.getFile());
-		URL path = ExtremeContractionUnitTests.class.getResource("S:/Local%20CptS/School/CptS%20422/CS422/net.sf.eclipsecs.sample/target/classes/ExtremeContractionTests/TestClassWithErrors.java");
+		URL path = ExtremeContractionUnitTests.class.getResource("TestClassWithErrors.java");
 		if (path == null) {
 			System.out.println("rip");
 		}
