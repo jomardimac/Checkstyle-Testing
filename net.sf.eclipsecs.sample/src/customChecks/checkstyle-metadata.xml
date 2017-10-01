@@ -13,5 +13,12 @@
                 <description>The lowest character count tolerable.</description>
             </property-metadata>
         </rule-metadata>
+        <rule-metadata name="%InconsistentIdentifierUse.name" internal-name="InconsistentIdentifierUse" parent="TreeWalker">
+            <alternative-name internal-name="customChecks.InconsistentIdentifierUseCheck" />
+            <description>%InconsistentIdentifierUse.desc</description>
+            <property-metadata name="lowestAcceptableCount" datatype="Integer" default-value="2">
+                <description>The lowest character count tolerable.</description>
+            </property-metadata>
+        </rule-metadata>
     </rule-group-metadata>
 </checkstyle-metadata>
