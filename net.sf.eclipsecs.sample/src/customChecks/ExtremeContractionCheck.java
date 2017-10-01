@@ -36,7 +36,7 @@ public class ExtremeContractionCheck extends AbstractCheck {
 			System.out.println("text: " + child.getText() + "|" + child.getType());
 			//Checking to see if the length of the token is less than the tolerable amount
 			if (child.getText().length() < lowestAcceptableCount && child.getType() == 58) {
-				//Loggin error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
+				//Logging error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
 				log(ast.getLineNo(), "extremecontraction", lowestAcceptableCount);
 			}
 			//Progressing in the tree.
