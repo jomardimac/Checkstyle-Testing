@@ -15,7 +15,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
 Export-Package: net.sf.eclipsecs.ui,
  net.sf.eclipsecs.ui.properties.filter,
- net.sf.eclipsecs.ui.quickfixes
+ net.sf.eclipsecs.ui.quickfixes,
+ org.jfree.io
 Eclipse-BuddyPolicy: registered
 Import-Package: org.eclipse.core.commands,
  org.eclipse.core.filebuffers,

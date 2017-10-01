@@ -11,4 +11,6 @@
     <artifactId>team.422.checks</artifactId>
     <packaging>eclipse-plugin</packaging>
     <name>eclipse-cs Sample Plugin</name>
+    <dependencies>
+    </dependencies>
 </project>

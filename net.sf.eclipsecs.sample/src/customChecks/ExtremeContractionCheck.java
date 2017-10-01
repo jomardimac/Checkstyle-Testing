@@ -1,3 +1,5 @@
+//Dillon Johnson
+
 package customChecks;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
