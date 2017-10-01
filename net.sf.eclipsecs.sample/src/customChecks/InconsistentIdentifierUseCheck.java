@@ -26,6 +26,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		boolean snakeFlag = false;
 		boolean precedingFFlag = false;
 		boolean allCapsFlag = false;
+		boolean firstVar = true;
 		
 		//Traversing the AST
 		while(child != null) {
@@ -45,7 +46,13 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 							}
 						}
 						else if (str.charAt(0) == 'f' && (str.charAt(1) >= 65 && str.charAt(1) <= 90)) {
-							precedingFFlag = true;
+							if (firstVar || precedingFFlag) {
+								precedingFFlag = true;
+								System.out.println("found preceding: this is the new default");
+							}
+							else {
+								log(ast.getLineNo(), "inconsistentidentifieruse");
+							}
 						}
 					}
 				}
@@ -67,13 +74,18 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 						}
 						else {
 							//temporarily set all caps to true; then check
-							allCapsFlag = true;
-							for (int i = 1; i < str.length(); i++) {
-								//if there is atleast one non-capitalized letter, we mark the flag as false and break
-								if (!(((int)str.charAt(i) >= 65 && (int)str.charAt(i) <= 90) || str.charAt(i) == '_')) {
-									allCapsFlag = false;
-									break;
+							if (firstVar) {
+								allCapsFlag = true;
+								for (int i = 1; i < str.length(); i++) {
+									//if there is atleast one non-capitalized letter, we mark the flag as false and break
+									if (!(((int)str.charAt(i) >= 65 && (int)str.charAt(i) <= 90) || str.charAt(i) == '_')) {
+										allCapsFlag = false;
+										break;
+									}
 								}
+							}
+							else {
+								log(ast.getLineNo(), "inconsistentidentifieruse");
 							}
 						}
 					}
@@ -82,6 +94,9 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 				//checking for camel case
 				
 				//checking for snake case
+				
+
+				firstVar = false;
 			}
 			//Progressing in the tree.
 			System.out.println("movin");
