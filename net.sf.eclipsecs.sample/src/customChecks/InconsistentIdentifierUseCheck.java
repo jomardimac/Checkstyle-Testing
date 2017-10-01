@@ -9,6 +9,13 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import antlr.collections.List;
 
 public class InconsistentIdentifierUseCheck extends AbstractCheck {
+	
+	private static final int CAMEL_CASE = 1;
+	private static final int SNAKE_CASE = 2;
+	private static final int PRECEDING_F = 3;
+	private static final int ALL_CAPS = 4;
+
+	private int identifier = 0;
 
 	//Method that returns all the tokens needed for this check... Here we are looking at Variables
 	@Override
@@ -25,11 +32,29 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return true;
 	}
 	
+	public boolean hasCapital(String var) {
+		for (int i = 0; i < var.length(); i++) {
+			if (var.charAt(i) >= 65 && var.charAt(i) <= 90) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean isCamelCase(String var) {
+		if (isAllLower(var)) {
+			return true;
+		}
+		if ((var.charAt(0) >= 97 && var.charAt(0) <= 122) && hasCapital(var) && !var.contains("_")) {
+			return true;
+		}
 		return false;
 	}
 	
 	public boolean isSnakeCase(String var) {
+		if ((isAllCaps(var) || isAllLower(var)) && var.contains("_")) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -41,90 +66,67 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean isAllCaps(String var) {
-		return false;
+		for (int i = 0; i < var.length(); i++) {
+			if (var.charAt(i) >= 97 && var.charAt(i) <= 122) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int findIndentifierType(String var) {
+		if (hasPrecedingF(var)) {
+			return 3;
+		}
+		if (isCamelCase(var)) {
+			return 1;
+		}
+		if (isSnakeCase(var)) {
+			return 2;
+		}
+		if (isAllCaps(var)) {
+			return 4;
+		}
+		//No identifier found, moving to next var for default
+		return 0;
 	}
 	
 	//Method for behavior of check.
 	@Override
 	public void visitToken(DetailAST ast) {
 		DetailAST child = (DetailAST) ast.getFirstChild();
-		boolean lowercaseFlag = false;
-		boolean uppercaseFlag = false;
-		boolean camelFlag = false;
-		boolean snakeFlag = false;
-		boolean precedingFFlag = false;
-		boolean allCapsFlag = false;
-		boolean firstVar = true;
 		
 		//Traversing the AST
 		while(child != null) {
 			if (child.getType() == 58) {
 				String str = child.getText();
 				
-				//Checking to see if the vars start with upper or lower case chars.
-				if ((int)str.charAt(0) >= 97 && (int)str.charAt(0) <= 122) {
-					if (uppercaseFlag) {
-						log(ast.getLineNo(), "inconsistentidentifieruse");
-					}
-					else {
-						lowercaseFlag = true;
-						if (str.length() <= 1) {
-							if (precedingFFlag) {
-								log(ast.getLineNo(), "inconsistentidentifieruse");
-							}
+				switch(identifier) {
+					case 0:
+						identifier = findIndentifierType(str);
+						System.out.println("ident now: " + identifier);
+						break;
+					case 1:
+						if (!isCamelCase(str)) {
+							log(ast.getLineNo(), "inconsistentidentifieruse");
 						}
-						else if (str.charAt(0) == 'f' && (str.charAt(1) >= 65 && str.charAt(1) <= 90)) {
-							if (firstVar || precedingFFlag) {
-								precedingFFlag = true;
-								System.out.println("found preceding: this is the new default");
-							}
-							else {
-								log(ast.getLineNo(), "inconsistentidentifieruse");
-							}
+						break;
+					case 2:
+						if (!isSnakeCase(str)) {
+							log(ast.getLineNo(), "inconsistentidentifieruse");
 						}
-					}
+						break;
+					case 3:
+						if (!hasPrecedingF(str)) {
+							log(ast.getLineNo(), "inconsistentidentifieruse");
+						}
+						break;
+					case 4:
+						if (!isAllCaps(str)) {
+							log(ast.getLineNo(), "inconsistentidentifieruse");
+						}
+						break;
 				}
-				else if ((int)str.charAt(0) >= 65 && (int)str.charAt(0) <= 90) {
-					if (lowercaseFlag) {
-						log(ast.getLineNo(), "inconsistentidentifieruse");
-					}
-					else {
-						//if not lowercase starting char, then uppercase
-						uppercaseFlag = true;
-						if (allCapsFlag) {
-							for (int i = 1; i < str.length(); i++) {
-								//if there is atleast one non-capitalized letter, we mark the flag as false and break
-								if (!(((int)str.charAt(i) >= 65 && (int)str.charAt(i) <= 90) || str.charAt(i) == '_')) {
-									log(ast.getLineNo(), "inconsistentidentifieruse");
-									break;
-								}
-							}
-						}
-						else {
-							//temporarily set all caps to true; then check
-							if (firstVar) {
-								allCapsFlag = true;
-								for (int i = 1; i < str.length(); i++) {
-									//if there is atleast one non-capitalized letter, we mark the flag as false and break
-									if (!(((int)str.charAt(i) >= 65 && (int)str.charAt(i) <= 90) || str.charAt(i) == '_')) {
-										allCapsFlag = false;
-										break;
-									}
-								}
-							}
-							else {
-								log(ast.getLineNo(), "inconsistentidentifieruse");
-							}
-						}
-					}
-				}
-				
-				//checking for camel case
-				
-				//checking for snake case
-				
-
-				firstVar = false;
 			}
 			//Progressing in the tree.
 			System.out.println("movin");
