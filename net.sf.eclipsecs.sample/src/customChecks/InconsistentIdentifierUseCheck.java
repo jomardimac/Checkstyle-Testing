@@ -41,6 +41,8 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return false;
 	}
 	
+	
+	
 	public boolean isCamelCase(String var) {
 		if (isAllLower(var)) {
 			return true;
