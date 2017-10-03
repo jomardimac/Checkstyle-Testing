@@ -36,5 +36,4 @@ public class meaninglessTermsCheck extends AbstractCheck{
 			}
 		}
 	}
-	
 }
