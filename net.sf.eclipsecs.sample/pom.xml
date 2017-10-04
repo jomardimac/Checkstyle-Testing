@@ -11,4 +11,21 @@
     <artifactId>team.422.checks</artifactId>
     <packaging>eclipse-plugin</packaging>
     <name>eclipse-cs Sample Plugin</name>
+    <properties>
+	    <powermock.version>1.7.1</powermock.version>
+	</properties>
+    <dependencies>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>  
+    </dependencies>
 </project>
