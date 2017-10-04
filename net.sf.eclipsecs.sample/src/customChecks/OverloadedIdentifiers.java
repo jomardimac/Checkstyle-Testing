@@ -29,7 +29,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	@Override
 	public int[] getDefaultTokens() {
 		// TODO Method Definitions:
-		return new int[] {TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF};
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 					NounFlag++;
 				}
 				if(NounFlag > 1) {
-					log(ast.getLineNo(),"More than 1 verb in your method");
+					log(ast.getLineNo(),"overloadedidentifiers");
 					break;
 				}
 			}
@@ -57,7 +57,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 					VerbFlag++;
 				}
 				if(VerbFlag > 1) {
-					log(ast.getLineNo(),"More than 1 verb in your method");
+					log(ast.getLineNo(),"overloadedidentifiers");
 					break;
 				}
 			}

@@ -26,6 +26,6 @@ public class WholePartTest {
 	public void shouldReturnFalseIfMethodContainsString() {
 		int[] res = wpc.getDefaultTokens();
 		//idk what to do here
-		//assertEquals(10,result[0]);
+		assertEquals(10,result[0]);
 	}
 }
