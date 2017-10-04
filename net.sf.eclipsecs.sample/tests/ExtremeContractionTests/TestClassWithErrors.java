@@ -1,4 +1,4 @@
-package ExtremeContractionTests;
+package extremeContractionTests;
 
 import java.util.Scanner;
 
