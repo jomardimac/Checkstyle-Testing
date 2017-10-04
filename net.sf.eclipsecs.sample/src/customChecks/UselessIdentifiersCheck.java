@@ -25,7 +25,6 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 	}
 	
 	
-	
 	@Override
 	public int[] getDefaultTokens() {
 		populateList();
