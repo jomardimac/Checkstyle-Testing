@@ -14,8 +14,9 @@ public class IsCamelCaseIntegrationTest {
 	private InconsistentIdentifierUseCheck iiuc;
 
 	@Test
-	public void shouldReturnTrueGivenAllLowercaseStringAndStubbedHasCapital() {
-		doReturn(false).when(iiuc).hasCapital("teststring");
+	public void shouldReturnFalseGivenNonCamelcaseStringAndStubbedHasCapital() {
+		doReturn(true).when(iiuc).hasCapital("NotACamelCaseString");
+		assertFalse(iiuc.isCamelCase("NotACamelCaseString"));
 	}
 
 }
