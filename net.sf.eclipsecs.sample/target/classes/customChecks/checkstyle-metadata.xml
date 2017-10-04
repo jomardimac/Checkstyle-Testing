@@ -15,7 +15,11 @@
         </rule-metadata>
         <rule-metadata name="%MeaninglessTerms.name" internal-name="MeaninglessTerms" parent="TreeWalker">
             <alternative-name internal-name="customChecks.MeaninglessTermsCheck" />
-            <description>%ExtremeContraction.desc</description>
+            <description>%MeaninglessTerms.desc</description>
+        </rule-metadata>
+        <rule-metadata name="%UselessIdentifiers.name" internal-name="UselessIdentifiers" parent="TreeWalker">
+            <alternative-name internal-name="customChecks.UselessIdentifiersCheck" />
+            <description>%UselessIdentifiers.desc</description>
         </rule-metadata>
     </rule-group-metadata>
 </checkstyle-metadata>
