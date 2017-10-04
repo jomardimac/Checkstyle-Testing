@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.powermock.api.mockito.PowerMockito;
-import static org.powermock.core.classloader.annotations.PrepareForTest;
-import static org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.*;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.modules.junit4.PowerMockRunner;
+import static org.mockito.Mockito.*;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
