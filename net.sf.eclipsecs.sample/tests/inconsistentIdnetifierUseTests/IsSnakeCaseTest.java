@@ -1,4 +1,4 @@
-package inconsistentIdentifierUseTests;
+package inconsistentIdnetifierUseTests;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;

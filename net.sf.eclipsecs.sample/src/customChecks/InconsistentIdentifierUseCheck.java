@@ -83,7 +83,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean isAllCaps(String var) {
-		if (var == null) {
+		if (var == null || var.isEmpty()) {
 			return false;
 		}
 		for (int i = 0; i < var.length(); i++) {
