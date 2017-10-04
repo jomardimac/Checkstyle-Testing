@@ -29,7 +29,7 @@ public class MeaninglessTermsCheck extends AbstractCheck{
 	}
 
 	@Override
-	public int[] getDefaultTokens() {
+	public int[] getDefaultTokens() {					//Standard getDefaultTokens used for every check.
 		try {
 			populateList();
 		} catch (IOException e) {
@@ -41,16 +41,14 @@ public class MeaninglessTermsCheck extends AbstractCheck{
 	}
 	
 	@Override
-	public void visitToken(DetailAST ast) {	
+	public void visitToken(DetailAST ast) {						//Called with each token visit during the check.
 		DetailAST child = (DetailAST)ast.getFirstChild();
 		
 		while(child != null) {
-
-			System.out.println("text: " + child.getText() + " | " + child.getType());
-			if (terms.contains(child.getText()) && child.getType() == 58) {
+			if (terms.contains(child.getText()) && child.getType() == 58) {			//if the child name is within the list of bad terms, log check error.
 				log(ast.getLineNo(), "meaninglessterms");
 			}
-			child = child.getNextSibling();
+			child = child.getNextSibling();											//Progress through the 'tree'.
 		}
 	}
 }

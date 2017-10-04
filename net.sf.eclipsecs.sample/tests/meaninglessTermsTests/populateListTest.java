@@ -15,7 +15,7 @@ public class populateListTest {
 	private MeaninglessTermsCheck mtc;
 	
 	@Before
-	public void init() {
+	public void init() {											//Initialize the mtc object.
 		mtc = new MeaninglessTermsCheck();
 	}
 	
@@ -23,12 +23,13 @@ public class populateListTest {
 	public void shouldBeInList() throws IOException {				//Test that variables were correctly added to list.
 		List<String> terms = null;
 		try {
-			terms = mtc.populateList();
+			terms = mtc.populateList();							//Populate the list with the terms from the original class.
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		//Determine if the correct terms were added.
 		assertTrue(terms.contains("foo"));
 		assertTrue(terms.contains("var"));
 		assertTrue(terms.contains("bar"));
@@ -45,6 +46,7 @@ public class populateListTest {
 			e.printStackTrace();
 		}
 		
+		//Check to make sure that nothing different was added.
 		assertFalse(terms.contains("test"));
 		assertFalse(terms.contains("not in list"));
 		assertFalse(terms.contains("jkl"));

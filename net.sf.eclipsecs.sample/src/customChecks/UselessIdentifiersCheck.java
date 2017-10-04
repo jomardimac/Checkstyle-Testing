@@ -12,7 +12,7 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 
 	List<String> illegalWords = new ArrayList<>();
 	
-	public void populateList() {
+	public List<String> populateList() {					//Create a list of terms that are not allowed in names.
 		illegalWords.add("String");
 		illegalWords.add("int");
 		illegalWords.add("double");
@@ -22,9 +22,11 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 		illegalWords.add("char");
 		illegalWords.add("final");
 		illegalWords.add("static");
+		
+		return illegalWords;
 	}
 	
-	public boolean substringFound (String bigString, String subString) {
+	public boolean substringFound (String bigString, String subString) {				//Determines if subString is a sub string of bigString and returns the bool answer.
 		if (bigString.contains(subString)) {
 			return true;
 		}
@@ -36,24 +38,24 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 	
 	
 	@Override
-	public int[] getDefaultTokens() {
+	public int[] getDefaultTokens() {												//Standard getDefaultTokens() used for each check.
 		populateList();
 		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
 	@Override
-	public void visitToken(DetailAST ast) {
+	public void visitToken(DetailAST ast) {											//Called for each token visit.
 		DetailAST child = ast.getFirstChild();
 		
 		//Determine the type of child, then determine if that type is within the definition name.
 		while(child != null) {
-			for(String i : illegalWords) {
+			for(String i : illegalWords) {												//Foeach string in illegal words, if string is in child name, then log check error.
 				if (substringFound(child.getText().toLowerCase(), i.toLowerCase())) {
 					log(ast.getLineNo(), "uselessIdentifiers");
 				}
 			}
 			
-			child = child.getNextSibling();
+			child = child.getNextSibling();									//Progress child to next child in the 'tree'.
 			
 		}
 	}
