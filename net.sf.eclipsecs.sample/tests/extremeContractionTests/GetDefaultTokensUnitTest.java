@@ -24,5 +24,4 @@ public class GetDefaultTokensUnitTest {
 		assertEquals(9, result[2]);
 		assertEquals(10, result[3]);
 	}
-
 }
