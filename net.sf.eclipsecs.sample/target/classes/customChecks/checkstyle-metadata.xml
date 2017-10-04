@@ -13,5 +13,9 @@
                 <description>The lowest character count tolerable.</description>
             </property-metadata>
         </rule-metadata>
+        <rule-metadata name="%MeaninglessTerms.name" internal-name="MeaninglessTerms" parent="TreeWalker">
+            <alternative-name internal-name="customChecks.MeaninglessTermsCheck" />
+            <description>%ExtremeContraction.desc</description>
+        </rule-metadata>
     </rule-group-metadata>
 </checkstyle-metadata>
