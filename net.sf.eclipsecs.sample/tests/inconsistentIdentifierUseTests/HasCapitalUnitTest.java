@@ -29,6 +29,8 @@ public class HasCapitalUnitTest {
 		assertFalse(iiuc.hasCapital("hello"));
 		assertFalse(iiuc.hasCapital("a_b_c_"));
 		assertFalse(iiuc.hasCapital("not-a-cap"));
+		assertFalse(iiuc.hasCapital(""));
+		assertFalse(iiuc.hasCapital(null));
 	}
 	
 }

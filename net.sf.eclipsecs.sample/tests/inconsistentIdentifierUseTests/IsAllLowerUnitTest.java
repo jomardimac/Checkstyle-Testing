@@ -39,4 +39,10 @@ public class IsAllLowerUnitTest {
 		assertFalse(iiuc.isAllLower("myVAR"));
 		assertFalse(iiuc.isAllLower("FOOBAr"));
 	}
+	
+	@Test
+	public void shouldReturnFalseGivenNullOrEmptyString() {
+		assertFalse(iiuc.isAllLower(null));
+		assertFalse(iiuc.isAllLower(""));
+	}
 }

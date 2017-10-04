@@ -24,6 +24,9 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean isAllLower(String var) {
+		if (var == null || var.isEmpty()) {
+			return false;
+		}
 		for (int i = 0; i < var.length(); i++) {
 			if (var.charAt(i) >= 65 && var.charAt(i) <= 90) {
 				return false;
@@ -33,6 +36,9 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean hasCapital(String var) {
+		if (var == null || var.isEmpty()) {
+			return false;
+		}
 		for (int i = 0; i < var.length(); i++) {
 			if (var.charAt(i) >= 65 && var.charAt(i) <= 90) {
 				return true;
@@ -41,10 +47,11 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return false;
 	}
 	
-	
-	
 	public boolean isCamelCase(String var) {
-		if (isAllLower(var)) {
+		if (var == null || var.isEmpty()) {
+			return false;
+		}
+		if (isAllLower(var) && !var.contains("_")) {
 			return true;
 		}
 		if ((var.charAt(0) >= 97 && var.charAt(0) <= 122) && hasCapital(var) && !var.contains("_")) {
@@ -54,13 +61,21 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean isSnakeCase(String var) {
-		if ((isAllCaps(var) || isAllLower(var)) && var.contains("_")) {
+		if (var == null || var.isEmpty()) {
+			return false;
+		}
+		//making sure that the variable is atleast 3 chars. "A_B",
+		//and contains a non starting or ending underscore
+		if (var.length() > 2 && var.substring(1, var.length() - 1).contains("_")) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean hasPrecedingF(String var) {
+		if (var == null) {
+			return false;
+		}
 		if (var.charAt(0) == 'f' && (var.charAt(1) >= 65 && var.charAt(1) <= 90)) {
 			return true;
 		}
@@ -68,6 +83,9 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean isAllCaps(String var) {
+		if (var == null) {
+			return false;
+		}
 		for (int i = 0; i < var.length(); i++) {
 			if (var.charAt(i) >= 97 && var.charAt(i) <= 122) {
 				return false;
