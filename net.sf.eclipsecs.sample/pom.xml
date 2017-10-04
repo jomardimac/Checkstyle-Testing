@@ -12,5 +12,11 @@
     <packaging>eclipse-plugin</packaging>
     <name>eclipse-cs Sample Plugin</name>
     <dependencies>
+	    <dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-module-junit4</artifactId>
+		    <version>1.7.3</version>
+		    <scope>test</scope>
+		</dependency>
     </dependencies>
 </project>
