@@ -24,6 +24,16 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 		illegalWords.add("static");
 	}
 	
+	public boolean substringFound (String bigString, String subString) {
+		if (bigString.contains(subString)) {
+			return true;
+		}
+		
+		else {
+			return false;
+		}
+	}
+	
 	
 	@Override
 	public int[] getDefaultTokens() {
@@ -38,7 +48,7 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 		//Determine the type of child, then determine if that type is within the definition name.
 		while(child != null) {
 			for(String i : illegalWords) {
-				if (child.getText().toLowerCase().contains(i.toLowerCase())) {
+				if (substringFound(child.getText().toLowerCase(), i.toLowerCase())) {
 					log(ast.getLineNo(), "uselessIdentifiers");
 				}
 			}
