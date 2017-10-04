@@ -73,7 +73,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 	}
 	
 	public boolean hasPrecedingF(String var) {
-		if (var == null) {
+		if (var == null || var.isEmpty() || var.length() < 2) {
 			return false;
 		}
 		if (var.charAt(0) == 'f' && (var.charAt(1) >= 65 && var.charAt(1) <= 90)) {
