@@ -22,7 +22,7 @@ public class WholePartCheck extends AbstractCheck {
 		while(child != null) {
 			//check if class is a substring of method:
 			//method.toLowerCase().contains(class.toLowerCase());
-			if(objBlock.getText().toLowerCase().contains(child.getText().toLowerCase())) {
+			if(objBlock.getText().toLowerCase().contains(child.getText().toLowerCase())) { //&& child.getType == method
 				//WholePart Error:
 				log(ast.getLineNo(),"Ambigious or Redundant");
 			}

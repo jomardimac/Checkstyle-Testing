@@ -42,7 +42,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
 			for(String str: Verbs) {
 				//if the string in the list is inside the method name:
-				if((str.trim().toLowerCase().contains(child.getText().toLowerCase()))){ //&& child.getType == method.
+				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))) { //&& child.getType == method.
 					NounFlag++;
 				}
 				if(NounFlag > 1) {
@@ -53,7 +53,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			
 			//Same for classes: 
 			for(String str: Nouns) {
-				if((str.trim().toLowerCase().contains(child.getText().toLowerCase()))){ //&& child.getType == class.
+				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))){ //&& child.getType == class.
 					VerbFlag++;
 				}
 				if(VerbFlag > 1) {
