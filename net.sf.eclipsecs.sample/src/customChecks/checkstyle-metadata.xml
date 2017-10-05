@@ -13,6 +13,13 @@
                 <description>The lowest character count tolerable.</description>
             </property-metadata>
         </rule-metadata>
+        <rule-metadata name="%WholePartCheck.name" internal-name="WholePartCheck" parent="TreeWalker">
+            <alternative-name internal-name="customChecks.WholePartCheck" />
+            <description>%WholePartCheck.desc</description>
+        </rule-metadata>
+        <rule-metadata name="%OverloadedIdentifiers.name" internal-name="OverloadedIdentifiers" parent="TreeWalker">
+            <alternative-name internal-name="customChecks.OverloadedIdentifiers" />
+            <description>%OverloadedIdentifiers.desc</description>
         <rule-metadata name="%MeaninglessTerms.name" internal-name="MeaninglessTerms" parent="TreeWalker">
             <alternative-name internal-name="customChecks.MeaninglessTermsCheck" />
             <description>%MeaninglessTerms.desc</description>
