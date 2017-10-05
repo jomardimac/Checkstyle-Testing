@@ -22,10 +22,8 @@ public class GetDefaultTokensUnitTest {
 	public void checkDefaultTokens() {
 		int[] res = oli.getDefaultTokens();
 		
-		System.out.println(res[3]);
 		assertEquals(9, res[0]);
 		assertEquals(14, res[1]);	
 		assertEquals(15, res[2]);
-		assertEquals(19, res[3]);
 	}
 }

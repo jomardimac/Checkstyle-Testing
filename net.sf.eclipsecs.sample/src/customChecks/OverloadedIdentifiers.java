@@ -36,9 +36,10 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	}*/
 	
 	//Quick hotfix, will fix later:
-	
+	//Populating a string list for verbs:
 	public List<String> populateVerbList() {		
 		List<String> Verbs = new ArrayList<>();
+		//Adding common verb terms:
 		Verbs.add("do");
 		Verbs.add("create");
 		Verbs.add("test");
@@ -57,9 +58,10 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	}
 	
 	//Quick hotfix, will fix later:
+	//Populating a stringlist for nouns:
 	public List<String> populateNounList() {
 		List<String> Nouns = new ArrayList<>();
-		
+		//common nouns:
 		Nouns.add("dog");
 		Nouns.add("cat");
 		Nouns.add("movie");
@@ -72,7 +74,8 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		
 		return Nouns;
 	}
-	//Put verb and noun in the list:
+	
+	//Same as my other check, grabs the methods, interface, classes, and variables.
 	@Override
 	public int[] getDefaultTokens() {
 		
@@ -85,6 +88,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		
 		DetailAST child = (DetailAST)ast.getFirstChild();
 		
+		///USED FOR LATER POPULATING USING A FILE NAME:
 		//populate verbs:
 		/*try {
 			populateVerbs("verbs.txt");
@@ -98,11 +102,13 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		
+		//
 		List<String> Verbs = this.populateVerbList();
 		List<String> Nouns = this.populateNounList();
 		while(child != null) {
 			
-			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
+			//Real slow but easiest/fastest way (O(n)^m)) where n = list of nouns and m = length of method name:
 			for(String str: Nouns) {
 				//if the string in the list is inside the method name:
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))) { //&& child.getType == method.
@@ -111,27 +117,22 @@ public class OverloadedIdentifiers extends AbstractCheck{
 				else if(NounFlag == 1) {
 					log(ast.getLineNo(),"overloadedidentifiers");
 					NounFlag = 0;
-					System.out.print("Noun: " + str);
 				}
-				
-				System.out.print("Nouns: " + str);
 			}
-			
-			//Same for classes: 
+			//Same for verbs: 
 			for(String str: Verbs) {
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))){ //&& child.getType == class.
 					VerbFlag++;
 				}
 				if(VerbFlag == 1) {
-					System.out.print("Verbs: " + str);
+					//System.out.print("Verbs: " + str);
 					log(ast.getLineNo(),"overloadedidentifiers");
 					VerbFlag = 0;
 				}
-				System.out.print("Verbs: " + str);
+				//System.out.print("Verbs: " + str);
 			}
 			//progress in the tree:
 			//System.out.println("movein" + System.getProperty("user.dir"));
-			
 			child = (DetailAST) child.getNextSibling();
 		}
 		
