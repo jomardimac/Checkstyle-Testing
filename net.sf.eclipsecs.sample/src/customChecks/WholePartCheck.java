@@ -33,7 +33,7 @@ public class WholePartCheck extends AbstractCheck {
 			//the next text will be the classname:
 			else if(foundCl == 1 && child.getType() == 58) {
 				clname = child.getText();
-				System.out.println("class name: " + clname + "\n\n");
+				//System.out.println("class name: " + clname + "\n\n");
 				foundCl = -1;
 				continue;
 			}
@@ -43,7 +43,7 @@ public class WholePartCheck extends AbstractCheck {
 				//System.out.println("text: "+ child.getText().toLowerCase() + " type: " + child.getType());
 				//The check to see if method is the class name:
 				if(child.getText().toLowerCase().contains(clname.toLowerCase()) == true) {
-					System.out.println("This is false: " + child.getText());
+					//System.out.println("This is false: " + child.getText());
 					log(ast.getLine(),"wholepartcheck");
 				}
 			}

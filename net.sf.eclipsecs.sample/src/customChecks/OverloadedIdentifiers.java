@@ -10,22 +10,65 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import antlr.collections.AST;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 public class OverloadedIdentifiers extends AbstractCheck{
 
 	List<String> Verbs = new ArrayList<>();
 	List<String> Nouns = new ArrayList<>();
-	Scanner VerbScan = new Scanner("listverbs.txt");
-	Scanner NounScan = new Scanner("listnouns.txt");
+
+	File testFile = new File("");
+	String curPath = testFile.getAbsolutePath();
 	
-	//Put verb and noun in the list:
-	private void populateLists() {
-		while(VerbScan.hasNextLine()) {
-			Verbs.add(VerbScan.nextLine());
-		}
-		while(NounScan.hasNextLine()) {
-			Nouns.add(NounScan.nextLine());
-		}
+	//DOESNT WORK FOR NOW:
+	private void populateVerbs(String filename) throws FileNotFoundException {
+		try (BufferedReader br = new BufferedReader(new FileReader(filename)))
+        {
+            String str;
+            while ((str = br.readLine()) != null) {
+                Verbs.add(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+
+		
 	}
+	
+	//Quick hotfix, will fix later:
+	private void populateVerbList() {
+		Verbs.add("do");
+		Verbs.add("create");
+		Verbs.add("test");
+		Verbs.add("implement");
+		Verbs.add("return");
+		Verbs.add("develop");
+		Verbs.add("merge");
+		Verbs.add("enforce");
+		Verbs.add("build");
+		Verbs.add("arrange");
+		Verbs.add("explain");
+		Verbs.add("join");
+		Verbs.add("propose");
+		
+	}
+	//Quick hotfix, will fix later:
+	private void populateNounList() {
+		Nouns.add("dog");
+		Nouns.add("cat");
+		Nouns.add("movie");
+		Nouns.add("train");
+		Nouns.add("bed");
+		Nouns.add("rice");
+		Nouns.add("snow");
+		Nouns.add("rain");
+		Nouns.add("water");
+
+		}
+	//Put verb and noun in the list:
 	@Override
 	public int[] getDefaultTokens() {
 		// TODO Method Definitions:
@@ -37,33 +80,57 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		DetailAST objBlock = ast.findFirstToken(TokenTypes.METHOD_DEF);
 		int VerbFlag = 0, NounFlag = 0;
 		DetailAST child = (DetailAST)ast.getFirstChild();
+		
+		//populate verbs:
+		/*try {
+			populateVerbs("verbs.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		/*try {
+			populateVerbs("listverbs.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		populateVerbList();
+		populateNounList();
 		while(child != null) {
 			
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
-			for(String str: Verbs) {
+			for(String str: Nouns) {
 				//if the string in the list is inside the method name:
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))) { //&& child.getType == method.
 					NounFlag++;
+					
 				}
 				if(NounFlag > 1) {
 					log(ast.getLineNo(),"overloadedidentifiers");
-					break;
+					NounFlag = 0;
+					System.out.print("Noun: " + str);
+					continue;
 				}
 			}
 			
 			//Same for classes: 
-			for(String str: Nouns) {
+			for(String str: Verbs) {
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))){ //&& child.getType == class.
 					VerbFlag++;
 				}
 				if(VerbFlag > 1) {
+					System.out.print("Noun: " + str);
 					log(ast.getLineNo(),"overloadedidentifiers");
-					break;
+					VerbFlag = 0;
+					continue;
 				}
 			}
 			//progress in the tree:
-			System.out.println("movein");
+			//System.out.println("movein" + System.getProperty("user.dir"));
+			
 			child = (DetailAST) child.getNextSibling();
 		}
+		
 	}
 }
