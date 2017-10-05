@@ -20,6 +20,7 @@
         <rule-metadata name="%OverloadedIdentifiers.name" internal-name="OverloadedIdentifiers" parent="TreeWalker">
             <alternative-name internal-name="customChecks.OverloadedIdentifiers" />
             <description>%OverloadedIdentifiers.desc</description>
+        </rule-metadata>
         <rule-metadata name="%MeaninglessTerms.name" internal-name="MeaninglessTerms" parent="TreeWalker">
             <alternative-name internal-name="customChecks.MeaninglessTermsCheck" />
             <description>%MeaninglessTerms.desc</description>
