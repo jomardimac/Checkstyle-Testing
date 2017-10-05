@@ -1,11 +1,10 @@
-package customChecks;
+package overloadIdentifierTest;
 
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.spy;
 
 
 
@@ -19,7 +18,7 @@ public class OverloadIdentifierTest {
 	
 	@Before
 	public void init() {
-		oic = new OverloadedIdentifiers;
+		oic = new OverloadedIdentifiers();
 	}
 	
 	@Test
