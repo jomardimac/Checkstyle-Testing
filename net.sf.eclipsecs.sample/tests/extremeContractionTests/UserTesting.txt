@@ -1,0 +1,5 @@
+User testing was done by my other teammates (Devon, and Jomar) checking out my branch in git,
+and running my checks on their own .java files.
+
+No negative comments were recieved, thus no changes to my code were made. All tests in my ExtremeContractionCheck
+ran successfully for both Devon and Jomar.
