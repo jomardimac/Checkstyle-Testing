@@ -23,6 +23,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return new int[] { TokenTypes.VARIABLE_DEF};
 	}
 	
+	//method to check if the given string contains no uppercase vars
 	public boolean isAllLower(String var) {
 		if (var == null || var.isEmpty()) {
 			return false;
@@ -35,6 +36,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return true;
 	}
 	
+	//method to check if the passed string has any uppercase vars
 	public boolean hasCapital(String var) {
 		if (var == null || var.isEmpty()) {
 			return false;
@@ -47,6 +49,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return false;
 	}
 	
+	//method to check if the passed string is in camelcase
 	public boolean isCamelCase(String var) {
 		if (var == null || var.isEmpty()) {
 			return false;
@@ -54,12 +57,14 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		if (isAllLower(var) && !var.contains("_")) {
 			return true;
 		}
+		//checking to see if the first letter is lowercase, it has a capital, and no underscores
 		if ((var.charAt(0) >= 97 && var.charAt(0) <= 122) && hasCapital(var) && !var.contains("_")) {
 			return true;
 		}
 		return false;
 	}
 	
+	//method to check if the passed in string is in snake case
 	public boolean isSnakeCase(String var) {
 		if (var == null || var.isEmpty()) {
 			return false;
@@ -72,6 +77,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return false;
 	}
 	
+	//method to check if the passed in string has a preceding f in the variable name
 	public boolean hasPrecedingF(String var) {
 		if (var == null || var.isEmpty() || var.length() < 2) {
 			return false;
@@ -82,6 +88,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return false;
 	}
 	
+	//Method to check if the passed in string has no lowercase letters
 	public boolean isAllCaps(String var) {
 		if (var == null || var.isEmpty()) {
 			return false;
@@ -94,6 +101,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		return true;
 	}
 	
+	//returns the identifier type (int) of the passed in string, this correlates to a case
 	public int findIndentifierType(String var) {
 		if (hasPrecedingF(var)) {
 			return 3;

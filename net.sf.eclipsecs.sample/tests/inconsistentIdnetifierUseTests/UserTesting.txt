@@ -1,0 +1,9 @@
+User testing was done by my other teammates (Devon, and Jomar) checking out my branch in git,
+and running my checks on their own .java files.
+
+While running the InconsistentIdentifierUseCheck on his own files, Jomar found an failure.
+This failer occured when a fault was executed within my code. This fault was due to an error,
+that I commited. The problem was that variables with a preceding f were being catagorized as camelcase.
+In order to fix this problem I changed the order of the if statements within my findIdentifierType method.
+Moving precedingF to the top, this would mark functions with the preceding f as such before they were
+able to be recognized by the camelcase checker.
