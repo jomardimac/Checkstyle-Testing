@@ -12,7 +12,7 @@ public class WholePartCheck extends AbstractCheck {
 
 	public int[] getDefaultTokens() { 
 		// TODO Grab the class definitions
-		return new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF};
+		return new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
 	int foundCl = 0;

@@ -17,14 +17,11 @@ import java.io.FileReader;
 import java.io.IOException;
 public class OverloadedIdentifiers extends AbstractCheck{
 
-	List<String> Verbs = new ArrayList<>();
-	List<String> Nouns = new ArrayList<>();
-
 	File testFile = new File("");
 	String curPath = testFile.getAbsolutePath();
 	
 	//DOESNT WORK FOR NOW:
-	private void populateVerbs(String filename) throws FileNotFoundException {
+	/*private void populateVerbs(String filename) throws FileNotFoundException {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename)))
         {
             String str;
@@ -36,10 +33,11 @@ public class OverloadedIdentifiers extends AbstractCheck{
         } 
 
 		
-	}
+	}*/
 	
 	//Quick hotfix, will fix later:
-	private void populateVerbList() {
+	List<String> Verbs = new ArrayList<>();
+	public List<String> populateVerbList() {		
 		Verbs.add("do");
 		Verbs.add("create");
 		Verbs.add("test");
@@ -54,9 +52,13 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		Verbs.add("join");
 		Verbs.add("propose");
 		
+		return Verbs;		
 	}
+	List<String> Nouns = new ArrayList<>();
 	//Quick hotfix, will fix later:
-	private void populateNounList() {
+	public List<String> populateNounList() {
+		
+		
 		Nouns.add("dog");
 		Nouns.add("cat");
 		Nouns.add("movie");
@@ -66,13 +68,14 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		Nouns.add("snow");
 		Nouns.add("rain");
 		Nouns.add("water");
-
-		}
+		
+		return Nouns;
+	}
 	//Put verb and noun in the list:
 	@Override
 	public int[] getDefaultTokens() {
-		// TODO Method Definitions:
-		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF};
+		
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
 	@Override
@@ -95,8 +98,6 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			e.printStackTrace();
 		}*/
 		
-		populateVerbList();
-		populateNounList();
 		while(child != null) {
 			
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
