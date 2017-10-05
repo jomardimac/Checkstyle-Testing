@@ -13,8 +13,11 @@ public class WholePartCheck extends AbstractCheck {
 		return new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
+	//Needed global variables to find out if class name is in method:
 	int foundCl = 0;
 	String clname = new String();
+	
+	//No other functions implemented: 
 	
 	@Override
 	public void visitToken(DetailAST ast) {											//Called for each token visit.
