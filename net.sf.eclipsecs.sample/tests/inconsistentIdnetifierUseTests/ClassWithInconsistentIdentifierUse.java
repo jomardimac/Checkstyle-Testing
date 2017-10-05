@@ -1,4 +1,4 @@
-package sampleJavaFiles;
+package inconsistentIdnetifierUseTests;
 
 public class ClassWithInconsistentIdentifierUse {
 	
