@@ -36,8 +36,9 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	}*/
 	
 	//Quick hotfix, will fix later:
-	List<String> Verbs = new ArrayList<>();
+	
 	public List<String> populateVerbList() {		
+		List<String> Verbs = new ArrayList<>();
 		Verbs.add("do");
 		Verbs.add("create");
 		Verbs.add("test");
@@ -54,10 +55,10 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		
 		return Verbs;		
 	}
-	List<String> Nouns = new ArrayList<>();
+	
 	//Quick hotfix, will fix later:
 	public List<String> populateNounList() {
-		
+		List<String> Nouns = new ArrayList<>();
 		
 		Nouns.add("dog");
 		Nouns.add("cat");
@@ -78,10 +79,10 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
+	int VerbFlag = 0, NounFlag = 0;
 	@Override
 	public void visitToken(DetailAST ast) {
-		DetailAST objBlock = ast.findFirstToken(TokenTypes.METHOD_DEF);
-		int VerbFlag = 0, NounFlag = 0;
+		
 		DetailAST child = (DetailAST)ast.getFirstChild();
 		
 		//populate verbs:
@@ -97,7 +98,8 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		
+		List<String> Verbs = this.populateVerbList();
+		List<String> Nouns = this.populateNounList();
 		while(child != null) {
 			
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
@@ -105,14 +107,14 @@ public class OverloadedIdentifiers extends AbstractCheck{
 				//if the string in the list is inside the method name:
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))) { //&& child.getType == method.
 					NounFlag++;
-					
 				}
-				if(NounFlag > 1) {
+				else if(NounFlag == 1) {
 					log(ast.getLineNo(),"overloadedidentifiers");
 					NounFlag = 0;
 					System.out.print("Noun: " + str);
-					continue;
 				}
+				
+				System.out.print("Nouns: " + str);
 			}
 			
 			//Same for classes: 
@@ -120,12 +122,12 @@ public class OverloadedIdentifiers extends AbstractCheck{
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))){ //&& child.getType == class.
 					VerbFlag++;
 				}
-				if(VerbFlag > 1) {
-					System.out.print("Noun: " + str);
+				if(VerbFlag == 1) {
+					System.out.print("Verbs: " + str);
 					log(ast.getLineNo(),"overloadedidentifiers");
 					VerbFlag = 0;
-					continue;
 				}
+				System.out.print("Verbs: " + str);
 			}
 			//progress in the tree:
 			//System.out.println("movein" + System.getProperty("user.dir"));
