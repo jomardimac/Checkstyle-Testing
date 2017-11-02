@@ -1,4 +1,4 @@
-package UselessIdentifiersTests;
+package uselessIdentifiersTests;
 
 import static org.junit.Assert.*;
 
