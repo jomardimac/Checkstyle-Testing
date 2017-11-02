@@ -17,14 +17,11 @@ import java.io.FileReader;
 import java.io.IOException;
 public class OverloadedIdentifiers extends AbstractCheck{
 
-	List<String> Verbs = new ArrayList<>();
-	List<String> Nouns = new ArrayList<>();
-
 	File testFile = new File("");
 	String curPath = testFile.getAbsolutePath();
 	
 	//DOESNT WORK FOR NOW:
-	private void populateVerbs(String filename) throws FileNotFoundException {
+	/*private void populateVerbs(String filename) throws FileNotFoundException {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename)))
         {
             String str;
@@ -36,10 +33,13 @@ public class OverloadedIdentifiers extends AbstractCheck{
         } 
 
 		
-	}
+	}*/
 	
 	//Quick hotfix, will fix later:
-	private void populateVerbList() {
+	//Populating a string list for verbs:
+	public List<String> populateVerbList() {		
+		List<String> Verbs = new ArrayList<>();
+		//Adding common verb terms:
 		Verbs.add("do");
 		Verbs.add("create");
 		Verbs.add("test");
@@ -54,9 +54,14 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		Verbs.add("join");
 		Verbs.add("propose");
 		
+		return Verbs;		
 	}
+	
 	//Quick hotfix, will fix later:
-	private void populateNounList() {
+	//Populating a stringlist for nouns:
+	public List<String> populateNounList() {
+		List<String> Nouns = new ArrayList<>();
+		//common nouns:
 		Nouns.add("dog");
 		Nouns.add("cat");
 		Nouns.add("movie");
@@ -66,21 +71,24 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		Nouns.add("snow");
 		Nouns.add("rain");
 		Nouns.add("water");
-
-		}
-	//Put verb and noun in the list:
-	@Override
-	public int[] getDefaultTokens() {
-		// TODO Method Definitions:
-		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF};
+		
+		return Nouns;
 	}
 	
+	//Same as my other check, grabs the methods, interface, classes, and variables.
+	@Override
+	public int[] getDefaultTokens() {
+		
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.VARIABLE_DEF};
+	}
+	
+	int VerbFlag = 0, NounFlag = 0;
 	@Override
 	public void visitToken(DetailAST ast) {
-		DetailAST objBlock = ast.findFirstToken(TokenTypes.METHOD_DEF);
-		int VerbFlag = 0, NounFlag = 0;
+		
 		DetailAST child = (DetailAST)ast.getFirstChild();
 		
+		///USED FOR LATER POPULATING USING A FILE NAME:
 		//populate verbs:
 		/*try {
 			populateVerbs("verbs.txt");
@@ -95,40 +103,36 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			e.printStackTrace();
 		}*/
 		
-		populateVerbList();
-		populateNounList();
+		//
+		List<String> Verbs = this.populateVerbList();
+		List<String> Nouns = this.populateNounList();
 		while(child != null) {
 			
-			//Real slow but easiest/fastest way (O(n)^m)) where n = list of verbs and m = length of method name:
+			//Real slow but easiest/fastest way (O(n)^m)) where n = list of nouns and m = length of method name:
 			for(String str: Nouns) {
 				//if the string in the list is inside the method name:
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))) { //&& child.getType == method.
 					NounFlag++;
-					
 				}
-				if(NounFlag > 1) {
+				else if(NounFlag == 1) {
 					log(ast.getLineNo(),"overloadedidentifiers");
 					NounFlag = 0;
-					System.out.print("Noun: " + str);
-					continue;
 				}
 			}
-			
-			//Same for classes: 
+			//Same for verbs: 
 			for(String str: Verbs) {
 				if((child.getText().toLowerCase().contains(str.trim().toLowerCase()))){ //&& child.getType == class.
 					VerbFlag++;
 				}
-				if(VerbFlag > 1) {
-					System.out.print("Noun: " + str);
+				if(VerbFlag == 1) {
+					//System.out.print("Verbs: " + str);
 					log(ast.getLineNo(),"overloadedidentifiers");
 					VerbFlag = 0;
-					continue;
 				}
+				//System.out.print("Verbs: " + str);
 			}
 			//progress in the tree:
 			//System.out.println("movein" + System.getProperty("user.dir"));
-			
 			child = (DetailAST) child.getNextSibling();
 		}
 		
