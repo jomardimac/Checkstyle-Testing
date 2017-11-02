@@ -23,6 +23,9 @@ public class ExtremeContractionCheck extends AbstractCheck {
 		if (count < 1) {
 			lowestAcceptableCount = 1;
 		}
+		else if (count > 15) {
+			lowestAcceptableCount = 15;
+		}
 		else {
 			lowestAcceptableCount = count;
 		}
