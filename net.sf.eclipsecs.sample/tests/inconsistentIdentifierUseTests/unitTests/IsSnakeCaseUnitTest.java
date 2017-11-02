@@ -1,4 +1,4 @@
-package inconsistentIdnetifierUseTests;
+package inconsistentIdentifierUseTests.unitTests;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import customChecks.InconsistentIdentifierUseCheck;
 
-public class IsSnakeCaseTest {
+public class IsSnakeCaseUnitTest {
 
 	private InconsistentIdentifierUseCheck iiuc;
 	
