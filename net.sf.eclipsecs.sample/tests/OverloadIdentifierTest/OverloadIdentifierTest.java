@@ -1,4 +1,4 @@
-package overloadIdentifierTest;
+package OverloadIdentifierTest;
 
 import static org.junit.Assert.*;
 
