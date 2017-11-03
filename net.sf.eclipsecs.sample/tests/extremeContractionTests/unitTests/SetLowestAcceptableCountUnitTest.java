@@ -21,11 +21,11 @@ public class SetLowestAcceptableCountUnitTest {
 		ecc.setLowestAcceptableCount(1);
 		assertEquals(1, ecc.getLowestAcceptableCount());
 		ecc.setLowestAcceptableCount(25);
-		assertEquals(25, ecc.getLowestAcceptableCount());
+		assertEquals(15, ecc.getLowestAcceptableCount());
 		ecc.setLowestAcceptableCount(3);
 		assertEquals(3, ecc.getLowestAcceptableCount());
 		ecc.setLowestAcceptableCount(15678);
-		assertEquals(15678, ecc.getLowestAcceptableCount());
+		assertEquals(15, ecc.getLowestAcceptableCount());
 	}
 	
 	@Test

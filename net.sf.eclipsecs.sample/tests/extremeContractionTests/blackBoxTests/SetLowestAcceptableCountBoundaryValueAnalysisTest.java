@@ -3,9 +3,7 @@
 package extremeContractionTests.blackBoxTests;
 
 import static org.junit.Assert.*;
-
 import java.util.Random;
-
 import org.junit.Before;
 import org.junit.Test;
 import customChecks.ExtremeContractionCheck;
