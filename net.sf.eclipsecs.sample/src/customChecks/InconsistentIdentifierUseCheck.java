@@ -73,7 +73,7 @@ public class InconsistentIdentifierUseCheck extends AbstractCheck {
 		}
 		//making sure that the variable is atleast 3 chars. "A_B",
 		//and contains a non starting or ending underscore
-		if (var.length() > 2 && var.substring(1, var.length() - 1).contains("_")) {
+		if (var.length() > 2 && var.substring(1, var.length() - 1).contains("_") && !var.contains(" ")) {
 			return true;
 		}
 		return false;
