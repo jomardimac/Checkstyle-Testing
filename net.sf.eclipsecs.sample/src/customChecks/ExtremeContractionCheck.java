@@ -51,6 +51,9 @@ public class ExtremeContractionCheck extends AbstractCheck {
 			System.out.println("text: " + child.getText() + "|" + child.getType());
 			//Checking to see if the length of the token is less than the tolerable amount
 			if (child.getText().length() < lowestAcceptableCount && child.getType() == 58) {
+				if (child.getLineNo() < 0) {
+					return null;
+				}
 				lineNumbers.add(child.getLineNo());
 			}
 			//Progressing in the tree.
