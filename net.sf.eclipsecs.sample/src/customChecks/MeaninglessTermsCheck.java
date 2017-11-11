@@ -27,6 +27,16 @@ public class MeaninglessTermsCheck extends AbstractCheck{
 		
 		return terms;
 	}
+	
+	public Boolean isPresent(String word) {
+		if(terms.contains(word.toLowerCase())) {				//If the variable name is found in the list, it is a meaninglessTerm.
+			return true;
+		} 
+		
+		else {
+			return false;
+		}
+	}
 
 	@Override
 	public int[] getDefaultTokens() {					//Standard getDefaultTokens used for every check.
@@ -45,7 +55,7 @@ public class MeaninglessTermsCheck extends AbstractCheck{
 		DetailAST child = (DetailAST)ast.getFirstChild();
 		
 		while(child != null) {
-			if (terms.contains(child.getText()) && child.getType() == 58) {			//if the child name is within the list of bad terms, log check error.
+			if (isPresent(child.getText()) && child.getType() == 58) {			//if the child name is within the list of bad terms, log check error.
 				log(ast.getLineNo(), "meaninglessterms");
 			}
 			child = child.getNextSibling();											//Progress through the 'tree'.

@@ -36,6 +36,15 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 		}
 	}
 	
+	public boolean isInList(String currWord) {
+		for(String i : illegalWords) {
+			if (substringFound(currWord.toLowerCase(), i.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	@Override
 	public int[] getDefaultTokens() {												//Standard getDefaultTokens() used for each check.
@@ -49,10 +58,8 @@ public class UselessIdentifiersCheck extends AbstractCheck {
 		
 		//Determine the type of child, then determine if that type is within the definition name.
 		while(child != null) {
-			for(String i : illegalWords) {												//Foeach string in illegal words, if string is in child name, then log check error.
-				if (substringFound(child.getText().toLowerCase(), i.toLowerCase())) {
-					log(ast.getLineNo(), "uselessIdentifiers");
-				}
+			if (isInList(child.getText())) {
+				log(ast.getLineNo(), "uselessIdentifiers");
 			}
 			
 			child = child.getNextSibling();									//Progress child to next child in the 'tree'.
