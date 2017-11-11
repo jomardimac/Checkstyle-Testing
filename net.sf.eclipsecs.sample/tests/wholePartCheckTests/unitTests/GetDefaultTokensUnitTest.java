@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import customChecks.WholePartCheck;;
+import customChecks.WholePartCheck;
 
 public class GetDefaultTokensUnitTest {
 	private WholePartCheck wpc;

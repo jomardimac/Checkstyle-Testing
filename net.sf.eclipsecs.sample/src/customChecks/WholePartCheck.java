@@ -61,4 +61,9 @@ public class WholePartCheck extends AbstractCheck {
 		}
 	}
 	
+	//invalid checker:
+	public boolean subStringCheck(int i, int j) {
+		return false;
+	}
+	
 }

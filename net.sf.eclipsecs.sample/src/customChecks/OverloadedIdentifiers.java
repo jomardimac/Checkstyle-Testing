@@ -16,12 +16,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.*;
 public class OverloadedIdentifiers extends AbstractCheck{
 
 	File testFile = new File("");
 	String curPath = testFile.getAbsolutePath();
 	
-	//DOESNT WORK FOR NOW:
+	int VerbFlag = 0, NounFlag = 0;
+	
+	///!!!!IN MY LOCAL MACHINE THIS WORKS BUT EVERY OTHER DOENST!!!:
 	/*private void populateVerbs(String filename) throws FileNotFoundException {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename)))
         {
@@ -36,7 +39,6 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		
 	}*/
 	
-	//Quick hotfix, will fix later:
 	//Populating a string list for verbs:
 	public List<String> populateVerbList() {		
 		List<String> Verbs = new ArrayList<>();
@@ -58,7 +60,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		return Verbs;		
 	}
 	
-	//Quick hotfix, will fix later:
+
 	//Populating a stringlist for nouns:
 	public List<String> populateNounList() {
 		List<String> Nouns = new ArrayList<>();
@@ -86,12 +88,30 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	public boolean subStringCheck(String a, String b) {
 		return a.toLowerCase().contains(b.toLowerCase());
 	}
+	List<String> Verbs = this.populateVerbList();
+	List<String> Nouns = this.populateNounList();
+	public boolean containsVerbsList(String w) {
+		for(String i : Verbs) {
+			if(subStringCheck(w,i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean containsNounList(String w) {
+		for(String i : Nouns) {
+			if(subStringCheck(w,i)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public ArrayList<Integer> findLinesWithErrors(DetailAST ast){
 		DetailAST child = (DetailAST) ast.getFirstChild();
 		ArrayList<Integer> lineNum = new ArrayList<Integer>();
-		List<String> Verbs = this.populateVerbList();
-		List<String> Nouns = this.populateNounList();
+		
 		while(child != null) {
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of nouns and m = length of method name:
 			for(String str: Nouns) {
@@ -122,7 +142,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		}
 		return lineNum;
 	}
-	int VerbFlag = 0, NounFlag = 0;
+	
 	@Override
 	public void visitToken(DetailAST ast) {
 		ArrayList<Integer> lineNumbers = findLinesWithErrors(ast);
