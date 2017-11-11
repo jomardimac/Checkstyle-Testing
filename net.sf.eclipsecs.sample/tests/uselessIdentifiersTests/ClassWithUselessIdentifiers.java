@@ -1,4 +1,4 @@
-package UselessIdentifiersTests;
+package uselessIdentifiersTests;
 
 public class ClassWithUselessIdentifiers {
 	public void executeA() {

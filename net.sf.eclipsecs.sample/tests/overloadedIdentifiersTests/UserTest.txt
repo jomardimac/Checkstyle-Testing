@@ -1,0 +1,5 @@
+This function, whole-part was tested by Devon Honig.
+
+Some methods that weren't verbs or nouns were getting marked because I forgot to put the flags back to 0.
+
+-Jomar

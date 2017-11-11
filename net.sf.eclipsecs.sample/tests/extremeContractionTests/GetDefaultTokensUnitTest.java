@@ -16,6 +16,7 @@ public class GetDefaultTokensUnitTest {
 		ecc = new ExtremeContractionCheck();
 	}
 	
+	//assures that they correct token types are being collected
 	@Test
 	public void shouldReturnSpecificValuesGivenClassInterfaceMethodAndVariableDefs() {
 		int[] result = ecc.getDefaultTokens();
