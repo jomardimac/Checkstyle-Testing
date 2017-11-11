@@ -1,6 +1,7 @@
 package customChecks;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -82,32 +83,16 @@ public class OverloadedIdentifiers extends AbstractCheck{
 		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
-	int VerbFlag = 0, NounFlag = 0;
-	@Override
-	public void visitToken(DetailAST ast) {
-		
-		DetailAST child = (DetailAST)ast.getFirstChild();
-		
-		///USED FOR LATER POPULATING USING A FILE NAME:
-		//populate verbs:
-		/*try {
-			populateVerbs("verbs.txt");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		/*try {
-			populateVerbs("listverbs.txt");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		//
+	public boolean subStringCheck(String a, String b) {
+		return a.toLowerCase().contains(b.toLowerCase());
+	}
+	
+	public ArrayList<Integer> findLinesWithErrors(DetailAST ast){
+		DetailAST child = (DetailAST) ast.getFirstChild();
+		ArrayList<Integer> lineNum = new ArrayList<Integer>();
 		List<String> Verbs = this.populateVerbList();
 		List<String> Nouns = this.populateNounList();
 		while(child != null) {
-			
 			//Real slow but easiest/fastest way (O(n)^m)) where n = list of nouns and m = length of method name:
 			for(String str: Nouns) {
 				//if the string in the list is inside the method name:
@@ -115,7 +100,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 					NounFlag++;
 				}
 				else if(NounFlag == 1) {
-					log(ast.getLineNo(),"overloadedidentifiers");
+					lineNum.add(child.getLineNo());
 					NounFlag = 0;
 				}
 			}
@@ -126,7 +111,7 @@ public class OverloadedIdentifiers extends AbstractCheck{
 				}
 				if(VerbFlag == 1) {
 					//System.out.print("Verbs: " + str);
-					log(ast.getLineNo(),"overloadedidentifiers");
+					lineNum.add(child.getLineNo());
 					VerbFlag = 0;
 				}
 				//System.out.print("Verbs: " + str);
@@ -135,6 +120,14 @@ public class OverloadedIdentifiers extends AbstractCheck{
 			//System.out.println("movein" + System.getProperty("user.dir"));
 			child = (DetailAST) child.getNextSibling();
 		}
-		
+		return lineNum;
+	}
+	int VerbFlag = 0, NounFlag = 0;
+	@Override
+	public void visitToken(DetailAST ast) {
+		ArrayList<Integer> lineNumbers = findLinesWithErrors(ast);
+		for(int x : lineNumbers) {
+			log(x, "overloadedidentifiers");
+		}
 	}
 }

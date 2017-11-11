@@ -1,4 +1,4 @@
-package wholePartCheckTests;
+package wholePartCheckTests.unitTests;
 
 import static org.junit.Assert.*;
 

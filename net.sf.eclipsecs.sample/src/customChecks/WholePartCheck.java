@@ -1,5 +1,6 @@
 package customChecks;
 
+import java.util.ArrayList;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -17,64 +18,46 @@ public class WholePartCheck extends AbstractCheck {
 	int foundCl = 0;
 	String clname = new String();
 	
-	//No other functions implemented: 
+	public boolean subStringCheck(String a, String b) {
+		return a.toLowerCase().contains(b.toLowerCase());
+	}
 	
-	@Override
-	public void visitToken(DetailAST ast) {											//Called for each token visit.
-		DetailAST child = ast.getFirstChild();
+	//Actual check: Finding the line errors and storing it in a list.
+	public ArrayList<Integer> findLinesWithErrors(DetailAST ast){
+		DetailAST child = (DetailAST) ast.getFirstChild();
+		ArrayList<Integer> lineNum = new ArrayList<Integer>();
 		
-		//Determine the type of child, then determine if that type is within the definition name.
-		/*
-		 * //figure out when to grab the class name:
-			if(child.getType() == 69 && foundCl == 0) { //child.getType() == 69 means a class is found.
-				foundCl = 1;
-				continue;
-			}
-			//the next text will be the classname:
-			else if(foundCl == 1 && child.getType() == 58) {
-				clname = child.getText();
-				//System.out.println("class name: " + clname + "\n\n");
-				foundCl = -1;
-				continue;
-			}
-			//Check the whole tree if name contains the classname.
-			if(foundCl == -1) {foundCl = -2; continue;} //for some reason the class gets called again.
-			if(foundCl == -2) {
-				//System.out.println("text: "+ child.getText().toLowerCase() + " type: " + child.getType());
-				//The check to see if method is the class name:
-				if(child.getText().toLowerCase().contains(clname.toLowerCase()) == true) {
-					System.out.println("This is false: " + child.getText());
-					log(ast.getLine(),"wholepartcheck");
-				}
-			}
-			
-			//System.out.println("text: "+ child.getText().toLowerCase() + " type: " + child.getType());
-			//progress in the tree:
-			//System.out.println("movein");
-		 */
+		//go through the tree:
 		while(child != null) {
-			//checks to see if its a human made type:
+			//Checks if the class is humanmade:
 			if(child.getType() == 58) {
-				//check to see if class name is found, if it is, store it.
+				//Flag to see if the class name is found: 
 				if(foundCl == 0) {
 					clname = child.getText();
 					System.out.println("Class " + clname);
 					foundCl = 1;
 					continue;
 				}
-				//the actual illegal name:
-				if(child.getText().toLowerCase().contains(clname.toLowerCase())) {
-					System.out.println("illegal " + clname);
-					log(ast.getLineNo(), "wholepartcheck");
+				//Checking the actual illegal name:
+				if(subStringCheck(child.getText().toLowerCase(),clname.toLowerCase())) {
+					lineNum.add(child.getLineNo());
 				}
-				
-				//System.out.println("text: "+child.getText() + " Type: " + child.getType());
 			}
 			
-			
-			//System.out.println("text: "+child.getText() + " Type: " + child.getType());
-			child = child.getNextSibling();									//Progress child to next child in the 'tree'.
-			
+			//go to the next tree:
+			child = child.getNextSibling();
+		}
+		return lineNum;
+	}
+	
+	///Called for each token visit.
+	@Override
+	public void visitToken(DetailAST ast) {											
+		//calls the actual line errors:
+		ArrayList<Integer> lineNumbers = findLinesWithErrors(ast);
+		for(int x : lineNumbers) {
+			//logging check line numbers:
+			log(x, "wholepartcheck");
 		}
 	}
 	
