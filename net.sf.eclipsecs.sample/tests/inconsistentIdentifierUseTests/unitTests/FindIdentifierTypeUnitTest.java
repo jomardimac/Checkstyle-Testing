@@ -1,4 +1,4 @@
-package inconsistentIdnetifierUseTests;
+package inconsistentIdentifierUseTests.unitTests;
 
 import static org.junit.Assert.*;
 

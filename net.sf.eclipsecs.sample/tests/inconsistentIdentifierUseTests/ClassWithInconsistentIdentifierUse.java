@@ -1,4 +1,4 @@
-package inconsistentIdnetifierUseTests;
+package inconsistentIdentifierUseTests;
 
 public class ClassWithInconsistentIdentifierUse {
 	

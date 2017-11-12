@@ -1,4 +1,4 @@
-package extremeContractionTests;
+package extremeContractionTests.unitTests;
 
 import static org.junit.Assert.*;
 

@@ -2,6 +2,8 @@
 
 package customChecks;
 
+import java.util.ArrayList;
+
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -23,6 +25,9 @@ public class ExtremeContractionCheck extends AbstractCheck {
 		if (count < 1) {
 			lowestAcceptableCount = 1;
 		}
+		else if (count > 15) {
+			lowestAcceptableCount = 15;
+		}
 		else {
 			lowestAcceptableCount = count;
 		}
@@ -38,8 +43,9 @@ public class ExtremeContractionCheck extends AbstractCheck {
 	//Method for behavior of check.
 	@Override
 	public void visitToken(DetailAST ast) {
+		//Moving to the first child
 		DetailAST child = (DetailAST) ast.getFirstChild();
-		
+
 		//Traversing the AST
 		while(child != null) {
 			//Debugging output
@@ -47,7 +53,7 @@ public class ExtremeContractionCheck extends AbstractCheck {
 			//Checking to see if the length of the token is less than the tolerable amount
 			if (child.getText().length() < lowestAcceptableCount && child.getType() == 58) {
 				//Logging error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
-				log(ast.getLineNo(), "extremecontraction", lowestAcceptableCount);
+				log(child.getLineNo(), "extremecontraction", lowestAcceptableCount);
 			}
 			//Progressing in the tree.
 			child = (DetailAST) child.getNextSibling();
