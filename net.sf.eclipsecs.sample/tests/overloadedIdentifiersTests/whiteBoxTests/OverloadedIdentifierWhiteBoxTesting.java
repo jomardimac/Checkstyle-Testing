@@ -20,7 +20,8 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
 
 import customChecks.OverloadedIdentifiers;
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(DetailAST.class)
 public class OverloadedIdentifierWhiteBoxTesting {
 	private DetailAST ast;
 	private OverloadedIdentifiers oic;
