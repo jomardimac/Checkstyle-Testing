@@ -9,8 +9,8 @@ import customChecks.InconsistentIdentifierUseCheck;
 //1. Input is invalid (string is empty/null)
 //2. Input is valid (string does not have preceding f)
 //3. Input is valid (string contains preceding f and has a length of 1)
-//3. Input is valid (string has a preceding f followed by a non capital letter)
-//4. Input is valid (string has a preceding f followed by a capital letter)
+//4. Input is valid (string has a preceding f followed by a non capital letter)
+//5. Input is valid (string has a preceding f followed by a capital letter)
 public class HasPrecedingFEquivalenceClassPartitioningTest {
 
 	private InconsistentIdentifierUseCheck iiuc;
