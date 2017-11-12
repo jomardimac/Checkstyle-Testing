@@ -34,6 +34,13 @@ public class WholePartDecisionTableTest {
 		assertFalse(wpc.subStringCheck("test", "ClassName"));
 	}
 	
+	//THIS IS THE ACTUAL BLACKBOX INPUTS IN DECISION TABLE:
+	@Test
+	public void wholePartDecisionTable() {
+		assertTrue(wpc.subStringCheck("testFunc", "test"));
+		assertFalse(wpc.subStringCheck("test", "ClassName"));
+		assertFalse(wpc.subStringCheck(3, 44));
+	}
 	//These will be the invalid tests, aka if the substring parameters are not strings::
 	@Test
 	public void isWholePartInvalid() {

@@ -20,12 +20,14 @@ public class OverloadedIdentifierDecisionTableTest {
 		List<String> verb = oic.populateVerbList();
 	}
 	
+	//SUBSTRING CHECK REPORT IS ON THE WHOLEPART SECTION - JOMAR
 	@Test
 	public void substringCheck() {
 		assertTrue(oic.subStringCheck("StringsList", "list"));
 		assertFalse(oic.subStringCheck("justTest", "Name"));
 	}
 	
+	//Both noun and verbs will be similar in the decision table, these next four just tests validity.
 	@Test
 	public void validNoun() {
 		assertTrue(oic.containsNounList("dog"));
@@ -48,5 +50,14 @@ public class OverloadedIdentifierDecisionTableTest {
 	public void invalidVerb() {
 		assertFalse(oic.containsVerbsList("useless"));
 		assertFalse(oic.containsVerbsList("words"));
+	}
+	
+	//Actual inputs in BlackBox test decision table:
+	@Test
+	public void isDecisionTableOI() {
+		assertTrue(oic.containsNounList("dog"));
+		assertTrue(oic.containsVerbsList("create"));
+		assertFalse(oic.containsNounList("run"));
+		assertFalse(oic.containsVerbsList("useless"));
 	}
 }

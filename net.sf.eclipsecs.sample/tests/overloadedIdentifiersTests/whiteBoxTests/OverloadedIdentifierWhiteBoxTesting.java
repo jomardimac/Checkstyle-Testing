@@ -52,7 +52,6 @@ public class OverloadedIdentifierWhiteBoxTesting {
 		assertTrue(oic.containsVerbsList("create"));
 		assertFalse(oic.containsVerbsList("words"));
 	}
-	
 	@Test
 	public void isOverloaded() {
 		//First line:
