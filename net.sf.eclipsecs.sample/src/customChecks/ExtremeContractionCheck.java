@@ -40,35 +40,23 @@ public class ExtremeContractionCheck extends AbstractCheck {
 				TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
-	//Extra helper method to ease testing for visitToken
-	public ArrayList<Integer> findLinesWithErrors(DetailAST ast) {
+	//Method for behavior of check.
+	@Override
+	public void visitToken(DetailAST ast) {
+		//Moving to the first child
 		DetailAST child = (DetailAST) ast.getFirstChild();
-		ArrayList<Integer> lineNumbers = new ArrayList<Integer>();
-		
+
 		//Traversing the AST
 		while(child != null) {
 			//Debugging output
 			System.out.println("text: " + child.getText() + "|" + child.getType());
 			//Checking to see if the length of the token is less than the tolerable amount
 			if (child.getText().length() < lowestAcceptableCount && child.getType() == 58) {
-				lineNumbers.add(child.getLineNo());
+				//Logging error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
+				log(child.getLineNo(), "extremecontraction", lowestAcceptableCount);
 			}
 			//Progressing in the tree.
 			child = (DetailAST) child.getNextSibling();
-		}
-		
-		return lineNumbers;
-	}
-	
-	//Method for behavior of check.
-	@Override
-	public void visitToken(DetailAST ast) {
-		//Calling helper function to get all line numbers of invalid vars
-		ArrayList<Integer> lineNumbers = findLinesWithErrors(ast);
-		//Adding errors to all lines that didn't meet the parameters
-		for(int x : lineNumbers) {
-			//Logging error of type "extremecontraction" (defined within the messages.properties file), of size lowestAcceptableCount
-			log(x, "extremecontraction", lowestAcceptableCount);
 		}
 	}
 }
