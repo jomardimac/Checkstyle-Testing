@@ -19,7 +19,12 @@ public class WholePartCheck extends AbstractCheck {
 	String clname = new String();
 	
 	public boolean subStringCheck(String a, String b) {
-		return a.toLowerCase().contains(b.toLowerCase());
+		if(a.toLowerCase().contains(b.toLowerCase())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	//Actual check: Finding the line errors and storing it in a list.
