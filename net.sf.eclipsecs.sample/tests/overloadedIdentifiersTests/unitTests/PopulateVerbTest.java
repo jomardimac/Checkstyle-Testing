@@ -1,4 +1,4 @@
-package overloadedIdentifiersTests;
+package overloadedIdentifiersTests.unitTests;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import customChecks.OverloadedIdentifiers;
 
-public class PopulateNounTests {
+public class PopulateVerbTest {
 	//we are gonna be testing this class but one function
 	private OverloadedIdentifiers oli;
 	
@@ -21,35 +21,35 @@ public class PopulateNounTests {
 	
 	@Test
 	public void shouldBeInList() throws IOException{
-		List<String> nounList = null;
+		List<String> verbList = null;
 		
 		try {
-			nounList = oli.populateNounList();
+			verbList = oli.populateVerbList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		//Check to see if terms were added:
-		assertTrue(nounList.contains("rice"));
-		assertTrue(nounList.contains("cat"));
-		assertTrue(nounList.contains("dog"));
-		assertTrue(nounList.contains("snow"));
+		assertTrue(verbList.contains("do"));
+		assertTrue(verbList.contains("create"));
+		assertTrue(verbList.contains("implement"));
+		assertTrue(verbList.contains("develop"));
 	}
 	
 	@Test
 	public void shouldNotBeInList() throws IOException{
-		List<String> nounList = null;
+		List<String> verbList = null;
 		
 		try {
-			nounList = oli.populateNounList();
+			verbList = oli.populateVerbList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		//Check to see if terms aren't in the list:
-		assertFalse(nounList.contains("do"));
-		assertFalse(nounList.contains("create"));
-		assertFalse(nounList.contains("sing"));
-		assertFalse(nounList.contains(""));
+		assertFalse(verbList.contains("noun"));
+		assertFalse(verbList.contains("seattle"));
+		assertFalse(verbList.contains("washington"));
+		assertFalse(verbList.contains(""));
 	}
 }
