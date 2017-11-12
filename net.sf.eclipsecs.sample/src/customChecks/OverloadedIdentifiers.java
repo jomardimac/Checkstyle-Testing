@@ -81,12 +81,16 @@ public class OverloadedIdentifiers extends AbstractCheck{
 	//Same as my other check, grabs the methods, interface, classes, and variables.
 	@Override
 	public int[] getDefaultTokens() {
-		
 		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.VARIABLE_DEF};
 	}
 	
 	public boolean subStringCheck(String a, String b) {
-		return a.toLowerCase().contains(b.toLowerCase());
+		if(a.toLowerCase().contains(b.toLowerCase())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	List<String> Verbs = this.populateVerbList();
 	List<String> Nouns = this.populateNounList();
